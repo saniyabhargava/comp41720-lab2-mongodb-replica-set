@@ -127,16 +127,6 @@ Runs inside the same Docker network, connecting to:
 
 ---
 
-#### Reproducibility Commands
-
-```bash
-docker compose up -d
-docker compose logs -f init-rs
-docker exec -it mongo1 mongosh --quiet --eval "rs.status()"
-docker compose run --rm client
-````
-
----
 
 ### 3. Replication and Consistency Experiments
 
@@ -309,15 +299,6 @@ docker start mongo1
 # Free port (if needed)
 netstat -ano | findstr 27017
 taskkill /PID <PID> /F
-```
 
 ---
-
-### Notes on Reproducing Results
-
-* Results vary slightly by CPU load
-* Relative ordering remains: w=1 fastest → w=majority → w=3
-* Primary reads fastest; secondary reads may lag briefly
-* To observe visible staleness, increase write frequency or delay replication (demo only)
-
 
