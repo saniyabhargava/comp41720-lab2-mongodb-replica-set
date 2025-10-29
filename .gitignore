@@ -1,0 +1,17 @@
+﻿# OS/Editor
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+env/
+
+# Docker
+*.log
+
+# Secrets
+.env
+.env.*

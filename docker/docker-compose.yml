@@ -1,0 +1,34 @@
+services:
+  mongo1:
+    image: mongo:7
+    hostname: mongo1
+    container_name: mongo1
+    command: ["mongod", "--replSet", "rs0", "--bind_ip_all"]
+    ports: ["27017:27017"]
+    networks: [mongo-net]
+
+  mongo2:
+    image: mongo:7
+    hostname: mongo2
+    container_name: mongo2
+    command: ["mongod", "--replSet", "rs0", "--bind_ip_all"]
+    networks: [mongo-net]
+
+  mongo3:
+    image: mongo:7
+    hostname: mongo3
+    container_name: mongo3
+    command: ["mongod", "--replSet", "rs0", "--bind_ip_all"]
+    networks: [mongo-net]
+
+  init-rs:
+    image: mongo:7
+    depends_on: [mongo1, mongo2, mongo3]
+    networks: [mongo-net]
+    volumes:
+      - ./init/rs-init.js:/rs-init.js
+    entrypoint: ["bash","-lc","sleep 3 && mongosh --host mongo1:27017 /rs-init.js"]
+
+networks:
+  mongo-net:
+    driver: bridge
